@@ -1,0 +1,15 @@
+# Binaries
+nodephone.exe
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test artifacts
+*.test
+*.out
+
+# Environment & Config local overrides
+.env
+.DS_Store
