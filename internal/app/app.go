@@ -46,6 +46,7 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 	genCmd := commands.NewGenCommand()
 	fnCmd := commands.NewFunctionsCommand()
 	logsCmd := commands.NewLogsCommand()
+	inspectCmd := commands.NewInspectCommand()
 	helpCmd := commands.NewHelpCommand()
 	versionCmd := commands.NewVersionCommand()
 
@@ -58,6 +59,7 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 	reg.Register(genCmd)
 	reg.Register(fnCmd)
 	reg.Register(logsCmd)
+	reg.Register(inspectCmd)
 	commands.RegisterPlaceholders(reg)
 	reg.Register(helpCmd)
 	reg.Register(versionCmd)

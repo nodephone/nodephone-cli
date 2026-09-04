@@ -43,14 +43,7 @@ func (p *PlaceholderCommand) Execute(ctx *Context, args []string) error {
 
 // RegisterPlaceholders adds all placeholder commands defined in PRD 001 to the registry.
 func RegisterPlaceholders(r *Registry) {
-	placeholders := []PlaceholderCommand{
-		{
-			name:        "inspect",
-			description: "Inspect local or remote NodePhone runtime state",
-			usage:       "nodephone inspect",
-			targetPRD:   "Future PRD",
-		},
-	}
+	placeholders := []PlaceholderCommand{}
 
 	for _, p := range placeholders {
 		cmd := p // copy loop variable

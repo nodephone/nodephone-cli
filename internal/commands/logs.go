@@ -2,19 +2,19 @@ package commands
 
 import (
 	"fmt"
-	"os"
+	"strings"
 
 	"github.com/nodephone/nodephone-cli/internal/auth"
-	"github.com/nodephone/nodephone-cli/internal/functions"
+	"github.com/nodephone/nodephone-cli/internal/diagnostics"
 )
 
 type LogsCommand struct {
-	fnClient *functions.Client
+	diagClient *diagnostics.Client
 }
 
 func NewLogsCommand() Command {
 	return &LogsCommand{
-		fnClient: functions.NewClient(),
+		diagClient: diagnostics.NewClient(),
 	}
 }
 
@@ -23,19 +23,34 @@ func (c *LogsCommand) Name() string {
 }
 
 func (c *LogsCommand) Description() string {
-	return "Stream runtime logs from deployed services or functions"
+	return "Stream live runtime logs from NodePhone Server or deployed functions"
 }
 
 func (c *LogsCommand) Usage() string {
-	return "nodephone logs <service-name>"
+	return "nodephone logs [service|function-name] [--follow|-f] [--json] [--level <INFO|DB|WS|FUNC|ERROR>]"
 }
 
 func (c *LogsCommand) Execute(ctx *Context, args []string) error {
-	if len(args) == 0 {
-		return fmt.Errorf("service/function name is required. Usage: %s", c.Usage())
+	follow := false
+	jsonMode := false
+	levelFilter := ""
+	target := ""
+
+	for i := 0; i < len(args); i++ {
+		arg := args[i]
+		switch {
+		case arg == "--follow" || arg == "-f":
+			follow = true
+		case arg == "--json":
+			jsonMode = true
+		case (arg == "--level" || arg == "-l") && i+1 < len(args):
+			levelFilter = args[i+1]
+			i++
+		case !strings.HasPrefix(arg, "-") && target == "":
+			target = arg
+		}
 	}
 
-	target := args[0]
 	creds, _ := auth.LoadCredentials()
 	cfg, _ := auth.LoadServerConfig()
 
@@ -51,8 +66,13 @@ func (c *LogsCommand) Execute(ctx *Context, args []string) error {
 		token = creds.AccessToken
 	}
 
-	ctx.Printer.Header(fmt.Sprintf("Streaming logs for %q...", target))
+	if target != "" && levelFilter == "" {
+		// If a specific function or service target was passed, set level filter or header
+		ctx.Printer.Header(fmt.Sprintf("Streaming logs for %q...", target))
+	} else {
+		ctx.Printer.Header("NodePhone Live Server Logs")
+	}
 	ctx.Printer.Println()
 
-	return c.fnClient.StreamLogs(serverURL, token, target, os.Stdout)
+	return c.diagClient.StreamServerLogs(serverURL, token, follow, levelFilter, jsonMode, ctx.Printer)
 }

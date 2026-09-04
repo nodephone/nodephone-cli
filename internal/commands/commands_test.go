@@ -64,6 +64,7 @@ func TestHelpCommandOutput(t *testing.T) {
 	ctx.Registry.Register(NewGenCommand())
 	ctx.Registry.Register(NewFunctionsCommand())
 	ctx.Registry.Register(NewLogsCommand())
+	ctx.Registry.Register(NewInspectCommand())
 	RegisterPlaceholders(ctx.Registry)
 
 	helpCmd := NewHelpCommand()
@@ -96,15 +97,11 @@ func TestHelpCommandOutput(t *testing.T) {
 }
 
 func TestPlaceholderExecution(t *testing.T) {
-	ctx, out, _ := newTestContext()
+	ctx, _, _ := newTestContext()
 	RegisterPlaceholders(ctx.Registry)
 
-	err := ctx.Registry.Execute(ctx, "inspect", nil)
-	if err != nil {
-		t.Fatalf("unexpected error executing inspect placeholder: %v", err)
-	}
-
-	if !strings.Contains(out.String(), "inspect") {
-		t.Errorf("expected placeholder text for inspect command, got:\n%s", out.String())
+	// All commands are fully implemented, placeholder list is empty
+	if len(ctx.Registry.List()) != 0 {
+		t.Errorf("expected 0 placeholders left, got %d", len(ctx.Registry.List()))
 	}
 }
