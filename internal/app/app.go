@@ -44,6 +44,8 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 	whoamiCmd := commands.NewWhoamiCommand()
 	dbCmd := commands.NewDBCommand()
 	genCmd := commands.NewGenCommand()
+	fnCmd := commands.NewFunctionsCommand()
+	logsCmd := commands.NewLogsCommand()
 	helpCmd := commands.NewHelpCommand()
 	versionCmd := commands.NewVersionCommand()
 
@@ -54,6 +56,8 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 	reg.Register(whoamiCmd)
 	reg.Register(dbCmd)
 	reg.Register(genCmd)
+	reg.Register(fnCmd)
+	reg.Register(logsCmd)
 	commands.RegisterPlaceholders(reg)
 	reg.Register(helpCmd)
 	reg.Register(versionCmd)
@@ -88,6 +92,8 @@ func (a *App) Run(args []string) int {
 		return a.execCommand(ctx, "help", args[1:])
 	case "version", "--version", "-v":
 		return a.execCommand(ctx, "version", args[1:])
+	case "deploy":
+		return a.execCommand(ctx, "functions", append([]string{"deploy"}, args[1:]...))
 	default:
 		return a.execCommand(ctx, firstArg, args[1:])
 	}

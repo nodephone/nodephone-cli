@@ -45,18 +45,6 @@ func (p *PlaceholderCommand) Execute(ctx *Context, args []string) error {
 func RegisterPlaceholders(r *Registry) {
 	placeholders := []PlaceholderCommand{
 		{
-			name:        "logs",
-			description: "Stream runtime logs from deployed services",
-			usage:       "nodephone logs [service-name]",
-			targetPRD:   "Future PRD",
-		},
-		{
-			name:        "deploy",
-			description: "Deploy functions and services to NodePhone Cloud",
-			usage:       "nodephone deploy",
-			targetPRD:   "Future PRD",
-		},
-		{
 			name:        "inspect",
 			description: "Inspect local or remote NodePhone runtime state",
 			usage:       "nodephone inspect",

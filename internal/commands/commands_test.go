@@ -62,6 +62,8 @@ func TestHelpCommandOutput(t *testing.T) {
 	ctx.Registry.Register(NewWhoamiCommand())
 	ctx.Registry.Register(NewDBCommand())
 	ctx.Registry.Register(NewGenCommand())
+	ctx.Registry.Register(NewFunctionsCommand())
+	ctx.Registry.Register(NewLogsCommand())
 	RegisterPlaceholders(ctx.Registry)
 
 	helpCmd := NewHelpCommand()
@@ -81,8 +83,8 @@ func TestHelpCommandOutput(t *testing.T) {
 		"login",
 		"db",
 		"gen",
+		"functions",
 		"logs",
-		"deploy",
 		"inspect",
 	}
 
@@ -97,12 +99,12 @@ func TestPlaceholderExecution(t *testing.T) {
 	ctx, out, _ := newTestContext()
 	RegisterPlaceholders(ctx.Registry)
 
-	err := ctx.Registry.Execute(ctx, "logs", nil)
+	err := ctx.Registry.Execute(ctx, "inspect", nil)
 	if err != nil {
-		t.Fatalf("unexpected error executing logs placeholder: %v", err)
+		t.Fatalf("unexpected error executing inspect placeholder: %v", err)
 	}
 
-	if !strings.Contains(out.String(), "logs") {
-		t.Errorf("expected placeholder text for logs command, got:\n%s", out.String())
+	if !strings.Contains(out.String(), "inspect") {
+		t.Errorf("expected placeholder text for inspect command, got:\n%s", out.String())
 	}
 }
