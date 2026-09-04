@@ -1,15 +1,44 @@
 # Binaries
-nodephone.exe
+bin/
+dist/
+build/
+
+# Go
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-
-# Test artifacts
 *.test
 *.out
 
-# Environment & Config local overrides
+# Coverage
+coverage.out
+coverage.html
+
+# Dependencies
+vendor/
+
+# Environment
 .env
+.env.*
+
+# NodePhone local config
+.nodephone/
+nodephone.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary
+tmp/
+temp/
