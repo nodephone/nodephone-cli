@@ -65,6 +65,7 @@ func TestHelpCommandOutput(t *testing.T) {
 	ctx.Registry.Register(NewFunctionsCommand())
 	ctx.Registry.Register(NewLogsCommand())
 	ctx.Registry.Register(NewInspectCommand())
+	ctx.Registry.Register(NewDeployCommand())
 	RegisterPlaceholders(ctx.Registry)
 
 	helpCmd := NewHelpCommand()
@@ -87,6 +88,7 @@ func TestHelpCommandOutput(t *testing.T) {
 		"functions",
 		"logs",
 		"inspect",
+		"deploy",
 	}
 
 	for _, sub := range expectedSubstrings {
