@@ -45,12 +45,6 @@ func (p *PlaceholderCommand) Execute(ctx *Context, args []string) error {
 func RegisterPlaceholders(r *Registry) {
 	placeholders := []PlaceholderCommand{
 		{
-			name:        "login",
-			description: "Authenticate with NodePhone Cloud",
-			usage:       "nodephone login",
-			targetPRD:   "Future PRD",
-		},
-		{
 			name:        "db",
 			description: "Manage database migrations and schema",
 			usage:       "nodephone db <subcommand>",

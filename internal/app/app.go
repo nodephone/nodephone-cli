@@ -39,11 +39,17 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 
 	// Register Core Commands
 	initCmd := commands.NewInitCommand()
+	loginCmd := commands.NewLoginCommand()
+	logoutCmd := commands.NewLogoutCommand()
+	whoamiCmd := commands.NewWhoamiCommand()
 	helpCmd := commands.NewHelpCommand()
 	versionCmd := commands.NewVersionCommand()
 
 	// Register Core Builtins & Placeholders
 	reg.Register(initCmd)
+	reg.Register(loginCmd)
+	reg.Register(logoutCmd)
+	reg.Register(whoamiCmd)
 	commands.RegisterPlaceholders(reg)
 	reg.Register(helpCmd)
 	reg.Register(versionCmd)
