@@ -43,6 +43,7 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 	logoutCmd := commands.NewLogoutCommand()
 	whoamiCmd := commands.NewWhoamiCommand()
 	dbCmd := commands.NewDBCommand()
+	genCmd := commands.NewGenCommand()
 	helpCmd := commands.NewHelpCommand()
 	versionCmd := commands.NewVersionCommand()
 
@@ -52,6 +53,7 @@ func NewWithWriters(out, errOut io.Writer) (*App, error) {
 	reg.Register(logoutCmd)
 	reg.Register(whoamiCmd)
 	reg.Register(dbCmd)
+	reg.Register(genCmd)
 	commands.RegisterPlaceholders(reg)
 	reg.Register(helpCmd)
 	reg.Register(versionCmd)

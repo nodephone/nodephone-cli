@@ -45,12 +45,6 @@ func (p *PlaceholderCommand) Execute(ctx *Context, args []string) error {
 func RegisterPlaceholders(r *Registry) {
 	placeholders := []PlaceholderCommand{
 		{
-			name:        "gen",
-			description: "Generate code, types, or client SDKs",
-			usage:       "nodephone gen [target]",
-			targetPRD:   "Future PRD",
-		},
-		{
 			name:        "logs",
 			description: "Stream runtime logs from deployed services",
 			usage:       "nodephone logs [service-name]",
