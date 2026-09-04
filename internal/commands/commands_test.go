@@ -56,6 +56,7 @@ func TestRegistry(t *testing.T) {
 func TestHelpCommandOutput(t *testing.T) {
 	ctx, out, _ := newTestContext()
 
+	ctx.Registry.Register(NewInitCommand())
 	RegisterPlaceholders(ctx.Registry)
 
 	helpCmd := NewHelpCommand()
@@ -91,12 +92,12 @@ func TestPlaceholderExecution(t *testing.T) {
 	ctx, out, _ := newTestContext()
 	RegisterPlaceholders(ctx.Registry)
 
-	err := ctx.Registry.Execute(ctx, "init", nil)
+	err := ctx.Registry.Execute(ctx, "login", nil)
 	if err != nil {
-		t.Fatalf("unexpected error executing init placeholder: %v", err)
+		t.Fatalf("unexpected error executing login placeholder: %v", err)
 	}
 
-	if !strings.Contains(out.String(), "init") || !strings.Contains(out.String(), "PRD 002") {
-		t.Errorf("expected placeholder text for init command, got:\n%s", out.String())
+	if !strings.Contains(out.String(), "login") {
+		t.Errorf("expected placeholder text for login command, got:\n%s", out.String())
 	}
 }
