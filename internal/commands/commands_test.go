@@ -60,6 +60,7 @@ func TestHelpCommandOutput(t *testing.T) {
 	ctx.Registry.Register(NewLoginCommand())
 	ctx.Registry.Register(NewLogoutCommand())
 	ctx.Registry.Register(NewWhoamiCommand())
+	ctx.Registry.Register(NewDBCommand())
 	RegisterPlaceholders(ctx.Registry)
 
 	helpCmd := NewHelpCommand()
@@ -95,12 +96,12 @@ func TestPlaceholderExecution(t *testing.T) {
 	ctx, out, _ := newTestContext()
 	RegisterPlaceholders(ctx.Registry)
 
-	err := ctx.Registry.Execute(ctx, "db", nil)
+	err := ctx.Registry.Execute(ctx, "gen", nil)
 	if err != nil {
-		t.Fatalf("unexpected error executing db placeholder: %v", err)
+		t.Fatalf("unexpected error executing gen placeholder: %v", err)
 	}
 
-	if !strings.Contains(out.String(), "db") {
-		t.Errorf("expected placeholder text for db command, got:\n%s", out.String())
+	if !strings.Contains(out.String(), "gen") {
+		t.Errorf("expected placeholder text for gen command, got:\n%s", out.String())
 	}
 }
